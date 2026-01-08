@@ -1,4 +1,4 @@
-const Order = require("./orderSchema");
+const Order = require("./OrderSchema");
 
 // Place order
 exports.placeOrder = async (req, res) => {
