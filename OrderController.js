@@ -1,7 +1,7 @@
 const Order = require("./OrderSchema");
 
 // Place order
-exports.placeOrder = async (req, res) => {
+exports.placeorder = async (req, res) => {
   try {
     // Prevent accidental _id duplication
     if (req.body._id) delete req.body._id;
