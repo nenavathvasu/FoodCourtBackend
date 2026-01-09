@@ -3,26 +3,29 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-// Import Routers
+const app = express();
+
+/* ✅ CORS — MUST be before routes */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://food-court-git-main-nenavath-vasus-projects.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+/* Middlewares */
+app.use(express.json());
+
+/* Import Routers */
 const userRoutes = require("./userRouter");
 const menuRoutes = require("./menuRouter");
 const orderRoutes = require("./orderRouter");
 const authMiddleware = require("./authMiddleware");
-
-const app = express();
-
-/* ✅ CORS — must be BEFORE routes */
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://food-court-git-main-nenavath-vasus-projects.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
-
-/* Middlewares */
-app.use(express.json());
 
 /* Routes */
 app.use("/api/v1/user", userRoutes);
