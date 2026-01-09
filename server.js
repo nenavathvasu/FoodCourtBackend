@@ -27,10 +27,10 @@ const menuRoutes = require("./menuRouter");
 const orderRoutes = require("./orderRouter");
 const authMiddleware = require("./authMiddleware");
 
-/* Routes */
-app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/menu", menuRoutes);
-app.use("/api/v1/orders", authMiddleware, orderRoutes);
+/* ✅ Routes */
+app.use("/api/v1/user", userRoutes);               // 🔓 PUBLIC (login, register)
+app.use("/api/v1/menu", menuRoutes);               // 🔓 PUBLIC
+app.use("/api/v1/orders", authMiddleware, orderRoutes); // 🔐 PROTECTED
 
 /* Default route */
 app.get("/", (req, res) => {
