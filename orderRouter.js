@@ -1,13 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const { placeOrder, fetchOrders } = require("./OrderController");
-const authMiddleware = require("./authMiddleware");
 
-// PLACE ORDER (protected)
-router.post("/placeorder", authMiddleware, placeOrder);
+// PLACE ORDER
+router.post("/placeorder", async (req, res) => {
+  try {
+    const order = new Order(req.body);
+    await order.save();
 
-// FETCH ALL ORDERS (protected)
-router.get("/", authMiddleware, fetchOrders);
+    res.status(201).json({
+      message: "Order placed successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
 
 module.exports = router;
