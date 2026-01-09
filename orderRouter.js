@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const Order = require("./OrderSchema"); // ✅ FIX: moved to top
 
 // PLACE ORDER
 router.post("/placeorder", async (req, res) => {

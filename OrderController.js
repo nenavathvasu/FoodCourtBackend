@@ -8,7 +8,10 @@ exports.placeorder = async (req, res) => {
 
     const newOrder = new Order(req.body);
     const savedOrder = await newOrder.save();
-    res.status(200).json({ message: "Order saved successfully", result: savedOrder });
+    res.status(200).json({
+      message: "Order saved successfully",
+      result: savedOrder
+    });
   } catch (err) {
     console.error("Error placing order:", err);
     res.status(500).json({ error: err.message });
