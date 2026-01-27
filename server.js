@@ -29,7 +29,7 @@ const orderRoutes = require("./orderRouter");
 /* ✅ Routes */
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/menu", menuRoutes);
-app.use("/api/v1/orders", orderRoutes); // now public as you wanted
+app.use("/api/v1/orders", orderRoutes); // public
 
 /* Default route */
 app.get("/", (req, res) => {
@@ -44,7 +44,12 @@ mongoose
   .catch((err) => console.log("MongoDB Error:", err));
 
 /* Server */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT; // ✅ only from .env
+if (!PORT) {
+  console.error("Error: PORT not defined in .env");
+  process.exit(1);
+}
+
 app.listen(PORT, () => {
   console.log(`Server running → http://localhost:${PORT}`);
 });
