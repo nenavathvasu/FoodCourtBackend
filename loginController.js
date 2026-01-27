@@ -4,8 +4,9 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).json({ message: "Email & password required" });
+    }
 
     const result = await loginService.loginUser(email, password);
 
@@ -14,7 +15,6 @@ exports.login = async (req, res) => {
       token: result.token,
       user: result.user,
     });
-
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

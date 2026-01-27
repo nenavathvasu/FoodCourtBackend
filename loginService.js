@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const User = require("./userSchema");
 const bcrypt = require("bcryptjs");
+const User = require("./userSchema");
 
 exports.loginUser = async (email, password) => {
   const user = await User.findOne({ email });

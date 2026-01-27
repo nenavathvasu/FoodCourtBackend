@@ -1,15 +1,16 @@
-const Order = require("./OrderSchema");
+const Order = require("./orderSchema");
 
-// Place order
-exports.placeorder = async (req, res) => {
+// Place a new order
+exports.placeOrder = async (req, res) => {
   try {
     // Prevent accidental _id duplication
     if (req.body._id) delete req.body._id;
 
     const newOrder = new Order(req.body);
     const savedOrder = await newOrder.save();
-    res.status(200).json({
-      message: "Order saved successfully",
+
+    res.status(201).json({
+      message: "Order placed successfully",
       result: savedOrder
     });
   } catch (err) {

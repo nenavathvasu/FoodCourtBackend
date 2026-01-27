@@ -25,12 +25,11 @@ app.use(express.json());
 const userRoutes = require("./userRouter");
 const menuRoutes = require("./menuRouter");
 const orderRoutes = require("./orderRouter");
-const authMiddleware = require("./authMiddleware");
 
 /* ✅ Routes */
-app.use("/api/v1/user", userRoutes);               // 🔓 PUBLIC (login, register)
-app.use("/api/v1/menu", menuRoutes);               // 🔓 PUBLIC
-app.use("/api/v1/orders", authMiddleware, orderRoutes); // 🔐 PROTECTED
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/menu", menuRoutes);
+app.use("/api/v1/orders", orderRoutes); // now public as you wanted
 
 /* Default route */
 app.get("/", (req, res) => {
@@ -38,6 +37,7 @@ app.get("/", (req, res) => {
 });
 
 /* MongoDB */
+mongoose.set("strictQuery", true);
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB Connected"))
@@ -48,5 +48,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running → http://localhost:${PORT}`);
 });
-
-module.exports = app;

@@ -1,21 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const Order = require("./OrderSchema"); // ✅ FIX: moved to top
+const { placeOrder, fetchOrders } = require("./orderController");
 
-// PLACE ORDER
-router.post("/placeorder", async (req, res) => {
-  try {
-    const order = new Order(req.body);
-    await order.save();
+// Place a new order
+router.post("/placeorder", placeOrder);
 
-    res.status(201).json({
-      message: "Order placed successfully",
-    });
-  } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
-  }
-});
+// Fetch all orders
+router.get("/", fetchOrders);
 
 module.exports = router;

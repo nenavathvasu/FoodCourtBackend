@@ -8,7 +8,7 @@ const VegSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: String, required: true }
   },
-  { timestamps: true } // adds createdAt & updatedAt
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Veg", VegSchema);
