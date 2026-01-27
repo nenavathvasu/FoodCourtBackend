@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { placeOrder, fetchOrders } = require("./orderController");
+const { placeOrder, fetchOrders } = require("./OrderController");
 
 // Place a new order
 router.post("/placeorder", placeOrder);
