@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://food-court-git-main-nenavath-vasus-projects.vercel.app",
+      "https://food-court-git-main-nenavath-vasus-projects.vercel.app/home",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -25,6 +25,7 @@ app.use(express.json());
 const userRoutes = require("./userRouter");
 const menuRoutes = require("./menuRouter");
 const orderRoutes = require("./orderRouter");
+
 
 /* ✅ Routes */
 app.use("/api/v1/user", userRoutes);
