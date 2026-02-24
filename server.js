@@ -9,7 +9,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://food-court-lilac.vercel.app/home"
+      "https://food-court-git-main-nenavath-vasus-projects.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
