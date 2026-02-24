@@ -9,8 +9,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "https://food-court-lilac.vercel.app/home",
+      "https://food-court-lilac.vercel.app/home"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
