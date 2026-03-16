@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Middleware
-const auth = require("./authMiddleWare");
+const auth = require("../express-demo/authMiddleWare");
 
 // Controllers
 const {
@@ -10,7 +10,7 @@ const {
   login,
   updateProfile,
   changePassword
-} = require("./AuthController");
+} = require("../express-demo/AuthController");
 
 // Model
 const User = require("./User");
