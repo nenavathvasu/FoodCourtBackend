@@ -10,7 +10,7 @@ const {
   login,
   updateProfile,
   changePassword
-} = require("../express-demo/Authcontroller");
+} = require("./Authcontroller");
 
 // Model
 const User = require("./User");
