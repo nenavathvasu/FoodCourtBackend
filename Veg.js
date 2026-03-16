@@ -2,11 +2,18 @@ const mongoose = require("mongoose");
 
 const VegSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true, unique: true },
-    name: { type: String, required: true, trim: true },
+    id:          { type: Number, required: true, unique: true },
+    name:        { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
-    price: { type: Number, required: true },
-    image: { type: String, required: true }
+    price:       { type: Number, required: true },
+    originalPrice: { type: Number },
+    image:       { type: String, required: true },
+    category:    { type: String, default: "Veg" },
+    rating:      { type: Number, default: 4.0 },
+    reviews:     { type: Number, default: 0 },
+    bestseller:  { type: Boolean, default: false },
+    discount:    { type: Number, default: 0 },
+    stock:       { type: Number, default: 100 },
   },
   { timestamps: true }
 );

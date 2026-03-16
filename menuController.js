@@ -1,26 +1,20 @@
-const {
-  saveVegItem,
-  getVegItems,
-  saveNonVegItem,
-  getNonVegItems,
-  deleteVegItem,
-  deleteNonVegItem
-} = require("./menuService");
+const Veg    = require("../express-demo/Veg");
+const NonVeg = require("../express-demo/NonVeg");
 
-// VEG
-exports.saveVeg = async (req, res) => {
+/* ── VEG ─────────────────────────────────────────── */
+exports.getVeg = async (req, res) => {
   try {
-    const result = await saveVegItem(req.body);
-    res.status(201).json({ message: "Veg item saved", result });
+    const items = await Veg.find().sort({ createdAt: -1 });
+    res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-exports.getVeg = async (req, res) => {
+exports.saveVeg = async (req, res) => {
   try {
-    const list = await getVegItems();
-    res.json(list);
+    const result = await Veg.create(req.body);
+    res.status(201).json({ message: "Veg item saved", result });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -28,27 +22,28 @@ exports.getVeg = async (req, res) => {
 
 exports.deleteVeg = async (req, res) => {
   try {
-    const result = await deleteVegItem(req.params.id);
-    res.json({ message: "Veg item deleted", result });
+    const result = await Veg.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ message: "Item not found" });
+    res.json({ message: "Veg item deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-// NON-VEG
-exports.saveNonVeg = async (req, res) => {
-  try {
-    const result = await saveNonVegItem(req.body);
-    res.status(201).json({ message: "Non-Veg item saved", result });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
+/* ── NON-VEG ─────────────────────────────────────── */
 exports.getNonVeg = async (req, res) => {
   try {
-    const list = await getNonVegItems();
-    res.json(list);
+    const items = await NonVeg.find().sort({ createdAt: -1 });
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.saveNonVeg = async (req, res) => {
+  try {
+    const result = await NonVeg.create(req.body);
+    res.status(201).json({ message: "Non-Veg item saved", result });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -56,8 +51,9 @@ exports.getNonVeg = async (req, res) => {
 
 exports.deleteNonVeg = async (req, res) => {
   try {
-    const result = await deleteNonVegItem(req.params.id);
-    res.json({ message: "Non-Veg item deleted", result });
+    const result = await NonVeg.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ message: "Item not found" });
+    res.json({ message: "Non-Veg item deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

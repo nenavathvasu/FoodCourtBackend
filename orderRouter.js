@@ -1,11 +1,18 @@
 const express = require("express");
-const router = express.Router();
-const { placeOrder, fetchOrders } = require("./OrderController");
+const router  = express.Router();
+const {
+  placeOrder,
+  fetchOrders,
+  getOrder,
+  updateOrderStatus,
+} = require("../express-demo/OrderController");
 
-// Place a new order
+// Public — frontend uses email param for per-user filtering
 router.post("/placeorder", placeOrder);
+router.get("/",            fetchOrders);       // GET /orders?email=x@y.com
+router.get("/:id",         getOrder);
 
-// Fetch all orders
-router.get("/", fetchOrders);
+// Admin / internal
+router.patch("/:id/status", updateOrderStatus);
 
 module.exports = router;

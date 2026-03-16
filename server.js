@@ -30,6 +30,8 @@ const orderRoutes = require("./orderRouter");
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/menu", menuRoutes);
 app.use("/api/v1/orders", orderRoutes); // public
+// Your routes here
+
 
 /* Default route */
 app.get("/", (req, res) => {
