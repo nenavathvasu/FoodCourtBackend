@@ -6,7 +6,7 @@ const {
   login,
   updateProfile,
   changePassword,
-} = require("../express-demo/AuthController");             // ✅ same folder
+} = require("./controller/AuthController");             // ✅ same folder
 const User = require("./User");              // ✅ same folder
 
 // ── PUBLIC ──────────────────────────────────────────
