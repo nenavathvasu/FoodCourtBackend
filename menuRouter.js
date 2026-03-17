@@ -3,7 +3,7 @@ const router  = express.Router();
 const {
   getVeg, saveVeg, deleteVeg,
   getNonVeg, saveNonVeg, deleteNonVeg,
-} = require("../express-demo/menuController");
+} = require("./menuController");
 
 // VEG
 router.get("/veg",        getVeg);
