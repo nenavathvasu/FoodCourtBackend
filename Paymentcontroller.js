@@ -2,7 +2,7 @@ require("dotenv").config();
 const Razorpay = require("razorpay");
 const crypto   = require("crypto");
 const Payment  = require("./Payment");       // ✅ same folder
-const Order    = require("./OrderSchema");   // ✅ same folder, match exact filename
+const Order    = require("./orderSchema");   // ✅ same folder, match exact filename
 
 const razorpay = new Razorpay({
   key_id:     process.env.RAZORPAY_KEY_ID,

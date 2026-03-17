@@ -1,4 +1,4 @@
-const Order = require("./OrderSchema");
+const Order = require("./orderSchema");
 
 exports.saveOrder = (data) => Order.create(data);
 
