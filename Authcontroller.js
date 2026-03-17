@@ -1,8 +1,7 @@
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt    = require("jsonwebtoken");
-const User   = require("./User");
-
+const User   = require("./User"); // ✅ must match your actual User model filename exactly
 
 /* ── REGISTER ──────────────────────────────────────── */
 exports.register = async (req, res) => {
@@ -58,7 +57,6 @@ exports.login = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    // Store token on user doc (optional — useful for single-session enforcement)
     user.token          = token;
     user.tokenExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
     await user.save();
@@ -85,7 +83,7 @@ exports.login = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const { name, email, phone, city, address } = req.body;
-    const userId = req.user.id; // set by authMiddleware
+    const userId = req.user.id;
 
     const updates = {};
     if (name)    updates.name    = name.trim();
@@ -94,7 +92,6 @@ exports.updateProfile = async (req, res) => {
     if (city)    updates.city    = city.trim();
     if (address) updates.address = address.trim();
 
-    // Check new email not taken by another user
     if (email) {
       const taken = await User.findOne({ email: email.toLowerCase(), _id: { $ne: userId } });
       if (taken) return res.status(400).json({ message: "Email already in use" });
@@ -105,10 +102,7 @@ exports.updateProfile = async (req, res) => {
 
     if (!updated) return res.status(404).json({ message: "User not found" });
 
-    res.json({
-      message: "Profile updated successfully",
-      user: updated,
-    });
+    res.json({ message: "Profile updated successfully", user: updated });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -1,21 +1,20 @@
-const Order = require("../express-demo/OrderSchema");
+// ✅ FIX: Linux is case-sensitive — must match the actual filename exactly
+// If your file is named "orderSchema.js" use that exact casing
+const Order = require("../express-demo/orderSchema"); // ✅ lowercase 'o' and 's'
 
 /* ── PLACE ORDER ─────────────────────────────────── */
 exports.placeOrder = async (req, res) => {
   try {
-    // Strip any accidental _id from body to avoid duplicate key errors
     const { _id, ...orderData } = req.body;
 
-    // Normalize email
     if (orderData.customerEmail) {
       orderData.customerEmail = orderData.customerEmail.toLowerCase().trim();
     }
 
-    // Set paymentStatus based on method
     if (orderData.paymentMethod === "cod") {
-      orderData.paymentStatus = "pending"; // paid on delivery
+      orderData.paymentStatus = "pending";
     } else if (orderData.paymentId) {
-      orderData.paymentStatus = "paid";    // online payment completed
+      orderData.paymentStatus = "paid";
     }
 
     const savedOrder = await Order.create(orderData);
@@ -31,13 +30,10 @@ exports.placeOrder = async (req, res) => {
 };
 
 /* ── FETCH ORDERS ────────────────────────────────── */
-// Supports  GET /orders          → all orders
-//           GET /orders?email=x  → orders for that user only (used by frontend)
 exports.fetchOrders = async (req, res) => {
   try {
     const filter = {};
 
-    // Filter by email if provided — this is the per-user query from the frontend
     if (req.query.email) {
       filter.customerEmail = req.query.email.toLowerCase().trim();
     }
@@ -61,7 +57,7 @@ exports.getOrder = async (req, res) => {
   }
 };
 
-/* ── UPDATE ORDER STATUS (admin use) ─────────────── */
+/* ── UPDATE ORDER STATUS ─────────────────────────── */
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { status, paymentStatus } = req.body;

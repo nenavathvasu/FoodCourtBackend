@@ -1,12 +1,12 @@
 const express = require("express");
 const router  = express.Router();
-const auth    = require("../middleware/authMiddleware");
+const auth    = require("../express-demo/authMiddleWare");
 const {
   createOrder,
   verifyPayment,
   webhook,
   getPaymentHistory,
-} = require("../controllers/paymentController");
+} = require("../express-demo/Paymentcontroller");
 
 /*
   POST /api/v1/payment/create-order   → create Razorpay order (protected)

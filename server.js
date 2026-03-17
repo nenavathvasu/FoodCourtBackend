@@ -9,29 +9,32 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://food-court-git-main-nenavath-vasus-projects.vercel.app"
+      "https://food-court-git-main-nenavath-vasus-projects.vercel.app",
+       "http://localhost:5173", "http://localhost:3000"
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-/* Middlewares */
+/* ✅ Raw body for Razorpay webhook signature verification */
+app.use("/api/v1/payment/webhook", express.raw({ type: "application/json" }));
+
+/* JSON body parser for all other routes */
 app.use(express.json());
 
 /* Import Routers */
-const userRoutes = require("./userRouter");
-const menuRoutes = require("./menuRouter");
-const orderRoutes = require("./orderRouter");
+const userRoutes    = require("./userRouter");
+const menuRoutes    = require("./menuRouter");
+const orderRoutes   = require("./orderRouter");
+const paymentRoutes = require("./paymentRouter"); // ✅ was missing
 
-
-/* ✅ Routes */
-app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/menu", menuRoutes);
-app.use("/api/v1/orders", orderRoutes); // public
-// Your routes here
-
+/* Routes */
+app.use("/api/v1/user",    userRoutes);
+app.use("/api/v1/menu",    menuRoutes);
+app.use("/api/v1/orders",  orderRoutes);
+app.use("/api/v1/payment", paymentRoutes); // ✅ was missing
 
 /* Default route */
 app.get("/", (req, res) => {
@@ -46,7 +49,7 @@ mongoose
   .catch((err) => console.log("MongoDB Error:", err));
 
 /* Server */
-const PORT = process.env.PORT; // ✅ only from .env
+const PORT = process.env.PORT;
 if (!PORT) {
   console.error("Error: PORT not defined in .env");
   process.exit(1);

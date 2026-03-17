@@ -1,5 +1,9 @@
 const jwt = require("jsonwebtoken");
 
+// ✅ Place this file at: middleware/authMiddleware.js
+// Then import it consistently in all routers:
+//   const auth = require("../middleware/authMiddleware");
+
 module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
