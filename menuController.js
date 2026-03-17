@@ -1,5 +1,5 @@
-const Veg    = require("../express-demo/Veg");
-const NonVeg = require("../express-demo/NonVeg");
+const Veg    = require("./Veg");
+const NonVeg = require("./NonVeg");
 
 /* ── VEG ─────────────────────────────────────────── */
 exports.getVeg = async (req, res) => {
