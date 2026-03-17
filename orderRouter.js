@@ -5,7 +5,7 @@ const {
   fetchOrders,
   getOrder,
   updateOrderStatus,
-} = require("../express-demo/OrderController");
+} = require("./OrderController");
 
 // Public — frontend uses email param for per-user filtering
 router.post("/placeorder", placeOrder);
