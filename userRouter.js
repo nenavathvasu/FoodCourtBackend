@@ -6,7 +6,7 @@ const {
   login,
   updateProfile,
   changePassword,
-} = require("./controller/AuthController");             // ✅ same folder
+} = require("./AuthController");             // ✅ same folder
 const User = require("./User");              // ✅ same folder
 
 // ── PUBLIC ──────────────────────────────────────────

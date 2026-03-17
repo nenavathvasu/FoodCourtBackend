@@ -1,7 +1,7 @@
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt    = require("jsonwebtoken");
-const User   = require("../User"); // ✅ must match your actual User model filename exactly
+const User   = require("./User"); // ✅ must match your actual User model filename exactly
 
 /* ── REGISTER ──────────────────────────────────────── */
 exports.register = async (req, res) => {
