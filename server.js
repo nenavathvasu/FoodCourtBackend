@@ -28,14 +28,15 @@ app.use(express.json());
 const userRoutes    = require("./userRouter");
 const menuRoutes    = require("./menuRouter");
 const orderRoutes   = require("./orderRouter");
-const paymentRoutes = require("./paymentRouter");
+
+
  // ✅ was missing
 
 /* Routes */
 app.use("/api/v1/user",    userRoutes);
 app.use("/api/v1/menu",    menuRoutes);
 app.use("/api/v1/orders",  orderRoutes);
-app.use("/api/v1/payment", paymentRoutes); // ✅ was missing
+ // ✅ was missing
  // ✅ was missing
 
 /* Default route */
