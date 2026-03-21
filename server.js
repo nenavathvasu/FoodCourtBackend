@@ -9,7 +9,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://food-court-git-main-nenavath-vasus-projects.vercel.app",
+      "https://food-court-git-main-nenavath-vasus-projects.vercel.app/home",
        "http://localhost:5173", "http://localhost:3000"
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
@@ -36,8 +36,7 @@ const orderRoutes   = require("./orderRouter");
 app.use("/api/v1/user",    userRoutes);
 app.use("/api/v1/menu",    menuRoutes);
 app.use("/api/v1/orders",  orderRoutes);
- // ✅ was missing
- // ✅ was missing
+
 
 /* Default route */
 app.get("/", (req, res) => {
