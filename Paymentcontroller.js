@@ -1,8 +1,7 @@
-// controllers/paymentController.js — Cash on Delivery only
+// paymentController.js  ← file MUST be named exactly this
+// ✅ FIX: import matches your actual filename "orderSchema.js" not "Order.js"
 const Order = require("./Order");
 
-// POST /api/v1/payment/confirm-cod
-// Called by frontend after placing a COD order to mark it confirmed
 exports.confirmCOD = async (req, res) => {
   try {
     const { orderId } = req.body;
