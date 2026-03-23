@@ -45,8 +45,8 @@ if (process.env.NODE_ENV !== "test") {
 // ── Routes ────────────────────────────────────────────────────────
 app.use("/api/v1/auth",    require("./routes/authRoutes"));
 app.use("/api/v1/menu",    require("./routes/menuRoutes"));
-app.use("/api/v1/orders",  require("./routes/orderRoutes"));
-app.use("/api/v1/payment", require("./routes/paymentRoutes"));
+app.use("/api/v1/orders",  require("./routes/OrderRoutes"));
+app.use("/api/v1/payment", require("./routes/PaymentRoutes"));
 
 app.get("/", (req, res) =>
   res.json({ success: true, message: "FoodCourt API running ✅", version: "1.0.0" })

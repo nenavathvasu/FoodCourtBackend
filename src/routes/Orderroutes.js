@@ -4,7 +4,7 @@ const validate = require("../middleware/validate");
 const { protect, authorize } = require("../middleware/auth");
 const ctrl    = require("../controllers/orderController");
 
-const orderRules = [
+const OrderRoutes = [
   body("items").isArray({ min: 1 }).withMessage("Items must be a non-empty array"),
   body("items.*.menuItemId").isNumeric().withMessage("Each item must have a valid menuItemId"),
   body("items.*.qty").isInt({ min: 1 }).withMessage("Each item must have qty >= 1"),
@@ -16,7 +16,7 @@ const orderRules = [
 ];
 
 // ── User routes ───────────────────────────────────────────────────
-router.post("/",           protect, orderRules, validate, ctrl.placeOrder);
+router.post("/",           protect, OrderRoutes, validate, ctrl.placeOrder);
 router.get("/my",          protect, ctrl.getMyOrders);
 router.get("/:id",         protect, ctrl.getOrder);
 router.patch("/:id/cancel",protect, ctrl.cancelOrder);
