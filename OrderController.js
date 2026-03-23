@@ -1,6 +1,6 @@
 // ✅ FIX: Linux is case-sensitive — must match the actual filename exactly
 // If your file is named "orderSchema.js" use that exact casing
-const Order = require("./orderSchema"); // ✅ lowercase 'o' and 's'
+const Order = require("./Order"); // ✅ lowercase 'o' and 's'
 
 /* ── PLACE ORDER ─────────────────────────────────── */
 exports.placeOrder = async (req, res) => {

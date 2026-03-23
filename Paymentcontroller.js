@@ -1,5 +1,5 @@
 // controllers/paymentController.js — Cash on Delivery only
-const Order = require("../models/Order");
+const Order = require("./Order");
 
 // POST /api/v1/payment/confirm-cod
 // Called by frontend after placing a COD order to mark it confirmed

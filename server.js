@@ -1,62 +1,89 @@
 require("dotenv").config();
-const express = require("express");
+const express  = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+const cors     = require("cors");
 
 const app = express();
 
-/* ✅ CORS — MUST be before routes */
+/* ─────────────────────────────────────────
+   CORS — must be BEFORE all routes
+   
+   IMPORTANT: origin must be the bare domain
+   with NO trailing slash and NO path like /home
+─────────────────────────────────────────── */
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://food-court-teal.vercel.app",
+  "https://food-court-git-main-nenavath-vasus-projects.vercel.app",
+  "https://food-court-exqa47iiu-nenavath-vasus-projects.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "https://food-court-git-main-nenavath-vasus-projects.vercel.app/home",
-       "http://localhost:5173", "http://localhost:3000"
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    origin: (origin, callback) => {
+      // Allow Postman / curl (no origin header)
+      if (!origin) return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      callback(new Error(`CORS blocked: ${origin}`));
+    },
+    methods:      ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    credentials:  true,
   })
 );
 
-/* ✅ Raw body for Razorpay webhook signature verification */
-app.use("/api/v1/payment/webhook", express.raw({ type: "application/json" }));
+// Must reply to preflight OPTIONS for every route
+app.options("/{*path}", cors()); // Express 5 wildcard syntax
 
-/* JSON body parser for all other routes */
+/* ─────────────────────────────────────────
+   Body parser
+─────────────────────────────────────────── */
 app.use(express.json());
 
-/* Import Routers */
+/* ─────────────────────────────────────────
+   Routes
+─────────────────────────────────────────── */
 const userRoutes    = require("./userRouter");
 const menuRoutes    = require("./menuRouter");
 const orderRoutes   = require("./orderRouter");
+const paymentRoutes = require("./paymentRoutes");
 
-
- // ✅ was missing
-
-/* Routes */
 app.use("/api/v1/user",    userRoutes);
 app.use("/api/v1/menu",    menuRoutes);
 app.use("/api/v1/orders",  orderRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
-
-/* Default route */
+/* ─────────────────────────────────────────
+   Health check
+─────────────────────────────────────────── */
 app.get("/", (req, res) => {
-  res.json({ status: "OK", message: "Backend running successfully" });
+  res.json({ status: "OK", message: "FoodCourt backend running ✅" });
 });
 
-/* MongoDB */
+/* ─────────────────────────────────────────
+   Global error handler
+─────────────────────────────────────────── */
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: err.message || "Internal server error" });
+});
+
+/* ─────────────────────────────────────────
+   MongoDB + Server
+─────────────────────────────────────────── */
 mongoose.set("strictQuery", true);
+
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("MongoDB Error:", err));
-
-/* Server */
-const PORT = process.env.PORT;
-if (!PORT) {
-  console.error("Error: PORT not defined in .env");
-  process.exit(1);
-}
-
-app.listen(PORT, () => {
-  console.log(`Server running → http://localhost:${PORT}`);
-});
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () =>
+      console.log(`🚀 Server → http://localhost:${PORT}`)
+    );
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB failed:", err.message);
+    process.exit(1);
+  });
